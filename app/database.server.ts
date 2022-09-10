@@ -42,18 +42,18 @@ const getPlaylist = async (playlistId: string): Promise<Playlist | Error> => {
   const url = playlistUrl(playlistId + '.json')
 
   const playlist = await errorBoundary(async () => {
-    const res = await fetch(url)
-    if (res.status >= 400) {
+    const response = await fetch(url)
+    if (response.status >= 400) {
       throw new Error(`Could not find playlist with ID "${playlistId}"`)
     }
 
-    if (res.headers.get('content-type') !== 'application/json') {
+    if (response.headers.get('content-type') !== 'application/json') {
       throw new Error(
         `Playlist with ID "${playlistId}" is not a valid JSON file.`,
       )
     }
 
-    const body = await res.json()
+    const body = (await response.json()) as unknown
     const parsedBody = playlistSchema.parse(body)
     return parsedBody
   })

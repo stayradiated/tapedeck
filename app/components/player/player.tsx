@@ -7,6 +7,32 @@ type PlayerProps = {
   playlist: Playlist
 }
 
+const findLastIndex = <T,>(
+  array: T[],
+  predicate: (item: T) => boolean,
+): number => {
+  for (let i = array.length - 1; i >= 0; i -= 1) {
+    if (predicate(array[i])) {
+      return i
+    }
+  }
+
+  return -1
+}
+
+const timestampToSeconds = (timestamp: string): number => {
+  const [minutes, seconds] = timestamp.split(':')
+  return Number.parseInt(minutes, 10) * 60 + Number.parseInt(seconds, 10)
+}
+
+const secondsToTimestamp = (seconds: number): string => {
+  const minutes = Math.floor(seconds / 60)
+  const modSeconds = Math.round(seconds % 60)
+  return `${minutes.toString().padStart(2, '0')}:${modSeconds
+    .toString()
+    .padStart(2, '0')}`
+}
+
 const Player = (props: PlayerProps) => {
   const { playlist } = props
 
@@ -24,16 +50,32 @@ const Player = (props: PlayerProps) => {
     setIsPlaying(true)
   }
 
+  const handleTimeUpdateEvent = () => {
+    if (audioRef.current) {
+      const { currentTime } = audioRef.current
+      const currentTimestamp = secondsToTimestamp(currentTime)
+      const trackIndex = findLastIndex(playlist.tracks, (track) => {
+        return currentTimestamp >= track.timestamp
+      })
+      setCurrentTrackIndex(trackIndex)
+    }
+  }
+
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.addEventListener('pause', handlePauseEvent)
       audioRef.current.addEventListener('play', handlePlayEvent)
+      audioRef.current.addEventListener('timeupdate', handleTimeUpdateEvent)
     }
 
     return () => {
       if (audioRef.current) {
         audioRef.current.removeEventListener('pause', handlePauseEvent)
         audioRef.current.removeEventListener('play', handlePlayEvent)
+        audioRef.current.removeEventListener(
+          'timeupdate',
+          handleTimeUpdateEvent,
+        )
       }
     }
   }, [])
@@ -42,10 +84,7 @@ const Player = (props: PlayerProps) => {
     console.log({ handleChangeTrackIndex: index })
     if (audioRef.current) {
       const track = playlist.tracks[index]
-      const [minutes, seconds] = track.timestamp.split(':')
-      const time =
-        Number.parseInt(minutes, 10) * 60 + Number.parseInt(seconds, 10)
-      audioRef.current.currentTime = time
+      audioRef.current.currentTime = timestampToSeconds(track.timestamp)
     }
 
     setCurrentTrackIndex(index)
@@ -67,7 +106,7 @@ const Player = (props: PlayerProps) => {
   const handleTogglePlay = () => {
     if (audioRef.current) {
       if (audioRef.current.paused) {
-        audioRef.current.play()
+        void audioRef.current.play()
       } else {
         audioRef.current.pause()
       }
@@ -76,7 +115,7 @@ const Player = (props: PlayerProps) => {
 
   return (
     <main className="player">
-      <audio className="audio" src={playlist.audio} ref={audioRef} />
+      <audio className="audio" src={playlist.audio} ref={audioRef} controls />
 
       <section className="playlist">
         <h1 className="playlist-name">{playlist.name}</h1>
