@@ -1,0 +1,117 @@
+.audio {
+  display: none;
+}
+
+.player {
+}
+
+.playlist {
+  min-height: 100vh;
+}
+
+.player .playlist-name {
+  text-align: center;
+  margin: 1em 0 0;
+}
+
+.player .playlist-created-at {
+  text-align: center;
+  font-weight: normal;
+  color: var(--color-fg-50);
+  margin: 0;
+}
+
+.player .main-album-art {
+  padding: 1em 2em 0;
+}
+
+.player .main-album-art .img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.playlist .controls {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.playlist .controls .button {
+  appearance: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 2em;
+}
+
+.playlist .scroll-hint {
+  width: 20px;
+  margin: 0 auto;
+}
+
+.playlist .scroll-hint svg path {
+  fill: var(--color-fg-50);
+}
+
+.playlist .controls .button svg path {
+  fill: var(--color-fg);
+}
+
+.playlist .current-track-metadata {
+  text-align: center;
+  line-height: 0.5em;
+}
+
+.playlist .current-track-metadata .artist {
+}
+
+.playlist .current-track-metadata .title {
+  font-weight: bold;
+}
+
+.playlist .current-track-metadata .album {
+  color: var(--color-fg-50);
+}
+
+.player .track-list {
+  list-style: none;
+  padding: 0;
+}
+
+.player .track-list-item {
+}
+
+.player .track-list-item .button {
+  appearance: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  display: grid;
+  grid-template: 
+    "album-art title"
+    "album-art artist";
+  grid-column-gap: 10px;
+
+  grid-template-rows: 20px 20px;
+}
+
+.player .track-list .album-art {
+  grid-area: album-art;
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  border-radius: 4px;
+}
+
+.player .track-list .title {
+  grid-area: title;
+  text-align: left;
+  color: var(--color-fg);
+}
+
+.player .track-list .artist {
+  grid-area: artist;
+  text-align: left;
+  color: var(--color-fg-50);
+}

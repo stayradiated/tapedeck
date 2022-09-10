@@ -1,0 +1,14 @@
+:root {
+  --color-bg: #333;
+  --color-fg: #fff;
+  --color-fg-50: #aaa;
+}
+
+body {
+  font-family: 'PT Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+
+  background: var(--color-bg);
+  color: var(--color-fg);
+}
