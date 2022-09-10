@@ -60,7 +60,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: stayradiated/volatile
+          images: stayradiated/tapedeck
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
@@ -90,7 +90,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v3
         with:
-          file: Dockerfile.
+          file: Dockerfile
           context: .
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
