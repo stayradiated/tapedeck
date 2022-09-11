@@ -40,6 +40,11 @@ const Player = (props: PlayerProps) => {
 
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
+  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(0)
+  const [buffered, setBuffered] = useState(0)
+  const remainingTime = duration - currentTime
+
   const currentTrack = playlist.tracks[currentTrackIndex]
 
   const handlePauseEvent = () => {
@@ -57,15 +62,44 @@ const Player = (props: PlayerProps) => {
       const trackIndex = findLastIndex(playlist.tracks, (track) => {
         return currentTimestamp >= track.timestamp
       })
+
+      setCurrentTime(currentTime)
       setCurrentTrackIndex(trackIndex)
     }
   }
+
+  const handleDurationChangeEvent = () => {
+    if (audioRef.current) {
+      const { duration } = audioRef.current
+      setDuration(Math.round(duration))
+    }
+  }
+
+  const handleProgressEvent = () => {
+    if (audioRef.current) {
+      const { buffered } = audioRef.current
+      const value = buffered.length > 0 ? buffered.end(buffered.length - 1) : 0
+      setBuffered(value)
+    }
+  }
+
+  useEffect(() => {
+    if (audioRef.current) {
+      handleDurationChangeEvent()
+      handleTimeUpdateEvent()
+    }
+  }, [audioRef.current])
 
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.addEventListener('pause', handlePauseEvent)
       audioRef.current.addEventListener('play', handlePlayEvent)
       audioRef.current.addEventListener('timeupdate', handleTimeUpdateEvent)
+      audioRef.current.addEventListener(
+        'durationchange',
+        handleDurationChangeEvent,
+      )
+      audioRef.current.addEventListener('progress', handleProgressEvent)
     }
 
     return () => {
@@ -76,6 +110,11 @@ const Player = (props: PlayerProps) => {
           'timeupdate',
           handleTimeUpdateEvent,
         )
+        audioRef.current.removeEventListener(
+          'durationchange',
+          handleDurationChangeEvent,
+        )
+        audioRef.current.removeEventListener('progress', handleProgressEvent)
       }
     }
   }, [])
@@ -123,6 +162,25 @@ const Player = (props: PlayerProps) => {
           <img className="img" src={currentTrack.albumArt} />
         </div>
 
+        <div className="timeline">
+          <div className="progress-bar">
+            <div
+              className="progress-bar-buffered"
+              style={{ width: `${(buffered / duration) * 100}%` }}
+            />
+            <div
+              className="progress-bar-inner"
+              style={{ width: `${(currentTime / duration) * 100}%` }}
+            />
+          </div>
+          <span className="current-time">
+            {secondsToTimestamp(currentTime)}
+          </span>
+          <span className="remaining-time">
+            -{secondsToTimestamp(remainingTime)}
+          </span>
+        </div>
+
         <div className="current-track-metadata">
           <p className="artist">{currentTrack.artist}</p>
           <p className="title">{currentTrack.title}</p>
@@ -160,6 +218,7 @@ const Player = (props: PlayerProps) => {
                   <img className="album-art" src={track.albumArt} />
                   <span className="title">{track.title}</span>
                   <span className="artist">{track.artist}</span>
+                  <span className="timestamp">{track.timestamp}</span>
                 </button>
               </li>
             )
