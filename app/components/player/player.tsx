@@ -213,7 +213,7 @@ const Player = (props: PlayerProps) => {
             }
 
             return (
-              <li className="track-list-item">
+              <li className="track-list-item" key={index}>
                 <button className="button" onClick={handleClick}>
                   <img className="album-art" src={track.albumArt} />
                   <span className="title">{track.title}</span>
