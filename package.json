@@ -35,8 +35,8 @@
     "prettier": true,
     "rules": {
       "import/extensions": "off",
-      "@typescript-eslint/naming-convention": "off",
-      "n/file-extension-in-import": "off"
+      "n/file-extension-in-import": "off",
+      "unicorn/text-encoding-identifier-case": "off"
     }
   },
   "prettier": {

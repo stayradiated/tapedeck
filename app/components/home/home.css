@@ -1,0 +1,13 @@
+.home {
+  width: 320px;
+  margin: 0 auto;
+}
+
+.home .playlist-link {
+  color: var(--color-fg);
+  text-decoration: none;
+}
+
+.home .playlist-link:hover {
+  text-decoration: underline;
+}

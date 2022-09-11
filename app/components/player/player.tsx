@@ -81,7 +81,6 @@ const Player = (props: PlayerProps) => {
   }, [])
 
   const handleChangeTrackIndex = (index: number) => {
-    console.log({ handleChangeTrackIndex: index })
     if (audioRef.current) {
       const track = playlist.tracks[index]
       audioRef.current.currentTime = timestampToSeconds(track.timestamp)
@@ -97,7 +96,6 @@ const Player = (props: PlayerProps) => {
   }
 
   const handleNextTrack = () => {
-    console.log({ currentTrackIndex, max: playlist.tracks.length })
     if (currentTrackIndex < playlist.tracks.length) {
       handleChangeTrackIndex(currentTrackIndex + 1)
     }

@@ -22,8 +22,6 @@ export const links: LinksFunction = () => [
 ]
 
 export const meta: MetaFunction = ({ data }) => {
-  console.log({ data })
-
   return {
     charset: 'utf-8',
     title: data?.playlist?.name ?? 'Playlist Not Found',
@@ -39,7 +37,6 @@ export const loader: LoaderFunction = async ({ params }) => {
   }
 
   const playlist = await getPlaylist(playlistId)
-  console.log({ playlist })
 
   if (playlist instanceof Error) {
     return json<LoaderData>({ playlistId, error: playlist.message })
@@ -51,7 +48,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   })
 }
 
-export default () => {
+const route = () => {
   const { playlist, error } = useLoaderData<LoaderData>()
 
   if (error) {
@@ -64,3 +61,5 @@ export default () => {
 
   return <Player playlist={playlist} />
 }
+
+export default route
