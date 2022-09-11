@@ -2,7 +2,7 @@ import * as z from 'zod'
 import { errorBoundary } from '@stayradiated/error-boundary'
 
 const fileUrl = (directory: string, filename: string): string =>
-  `https://files.stayradiated.com/tapedeck/${directory}/${filename}`
+  `https://cat.stayradiated.com/tapedeck/${directory}/${filename}`
 
 const playlistUrl = (filename: string): string => fileUrl('playlist', filename)
 
