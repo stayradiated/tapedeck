@@ -2,28 +2,31 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "remix build && ncc build ./build/index.js",
+    "build": "tsc --noEmit",
+    "package": "rm -rf dist && remix build && node ./scripts/build.mjs",
     "dev": "remix dev",
-    "start": "remix-serve build",
-    "tidy": "xo --fix ./app"
+    "tidy": "xo --fix --plugin=react ./app"
   },
   "dependencies": {
-    "@remix-run/node": "^1.12.0",
-    "@remix-run/react": "^1.12.0",
-    "@remix-run/serve": "^1.12.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "zod": "3.20.6",
-    "@stayradiated/error-boundary": "4.1.0"
+    "@remix-run/express": "1.12.0",
+    "@remix-run/node": "1.12.0",
+    "@remix-run/react": "1.12.0",
+    "@stayradiated/error-boundary": "4.1.0",
+    "compression": "1.7.4",
+    "express": "4.18.2",
+    "morgan": "1.10.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "zod": "3.20.6"
   },
   "devDependencies": {
-    "@remix-run/dev": "^1.12.0",
-    "@remix-run/eslint-config": "^1.12.0",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.10",
+    "@remix-run/dev": "1.12.0",
+    "@remix-run/eslint-config": "1.12.0",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.10",
     "@vercel/ncc": "0.36.1",
-    "eslint": "^8.34.0",
-    "typescript": "^4.9.5",
+    "eslint": "8.34.0",
+    "typescript": "4.9.5",
     "xo": "0.53.1"
   },
   "engines": {
