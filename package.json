@@ -8,23 +8,23 @@
     "tidy": "xo --fix ./app"
   },
   "dependencies": {
-    "@remix-run/node": "^1.7.0",
-    "@remix-run/react": "^1.7.0",
-    "@remix-run/serve": "^1.7.0",
+    "@remix-run/node": "^1.12.0",
+    "@remix-run/react": "^1.12.0",
+    "@remix-run/serve": "^1.12.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "zod": "3.19.0",
-    "@stayradiated/error-boundary": "4.0.0"
+    "zod": "3.20.6",
+    "@stayradiated/error-boundary": "4.1.0"
   },
   "devDependencies": {
-    "@remix-run/dev": "^1.7.0",
-    "@remix-run/eslint-config": "^1.7.0",
-    "@types/react": "^18.0.15",
-    "@types/react-dom": "^18.0.6",
-    "@vercel/ncc": "0.34.0",
-    "eslint": "^8.20.0",
-    "typescript": "^4.7.4",
-    "xo": "0.52.3"
+    "@remix-run/dev": "^1.12.0",
+    "@remix-run/eslint-config": "^1.12.0",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.10",
+    "@vercel/ncc": "0.36.1",
+    "eslint": "^8.34.0",
+    "typescript": "^4.9.5",
+    "xo": "0.53.1"
   },
   "engines": {
     "node": ">=14"
