@@ -9,10 +9,13 @@ const playlistUrl = (filename: string): string => fileUrl('playlist', filename)
 
 const albumArtUrl = (filename: string): string => fileUrl('albumart', filename)
 
+const coverArtUrl = (filename: string): string => fileUrl('coverart', filename)
+
 const audioUrl = (filename: string): string => fileUrl('audio', filename)
 
 const expandUrls = (playlist: Readonly<Playlist>): Playlist => ({
   ...playlist,
+  coverArt: playlist.coverArt ? coverArtUrl(playlist.coverArt) : undefined,
   audio: audioUrl(playlist.audio),
   tracks: playlist.tracks.map((track) => ({
     ...track,
@@ -34,6 +37,12 @@ const playlistSchema = z.object({
   name: z.string(),
   createdAt: z.string(),
   audio: z.string(),
+  external: z
+    .object({
+      spotify: z.string().optional(),
+    })
+    .optional(),
+  coverArt: z.string().optional(),
   tracks: z.array(trackSchema),
 })
 

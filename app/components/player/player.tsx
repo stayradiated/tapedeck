@@ -38,6 +38,7 @@ const Player = (props: PlayerProps) => {
 
   const audioRef = useRef<HTMLAudioElement>(null)
 
+  const [hasPlayed, setHasPlayed] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
@@ -53,6 +54,7 @@ const Player = (props: PlayerProps) => {
 
   const handlePlayEvent = () => {
     setIsPlaying(true)
+    setHasPlayed(true)
   }
 
   const handleTimeUpdateEvent = () => {
@@ -159,7 +161,14 @@ const Player = (props: PlayerProps) => {
         <h4 className="playlist-created-at">{playlist.createdAt}</h4>
 
         <div className="main-album-art">
-          <img className="img" src={currentTrack.albumArt} />
+          <img
+            className="img"
+            src={
+              !hasPlayed && playlist.coverArt
+                ? playlist.coverArt
+                : currentTrack.albumArt
+            }
+          />
         </div>
 
         <div className="timeline">
@@ -225,6 +234,21 @@ const Player = (props: PlayerProps) => {
           })}
         </ol>
       </section>
+      {playlist.external?.spotify && (
+        <div className="external-links">
+          <a
+            className="spotify-link"
+            target="_blank"
+            rel="noopener"
+            href={playlist.external.spotify}
+          >
+            <div className="spotify-logo">
+              <icons.Spotify />
+            </div>
+            Listen on Spotify
+          </a>
+        </div>
+      )}
     </main>
   )
 }

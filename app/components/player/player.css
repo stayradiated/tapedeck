@@ -195,3 +195,30 @@
   color: var(--color-fg-50);
   line-height: 3em;
 }
+
+.player .external-links {
+  border-top: 2px solid #555;
+  padding: 0.8em 0;
+  display: flex;
+  justify-content: center;
+}
+
+.player .spotify-link {
+  color: #fff;
+  opacity: 0.5;
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  gap: 1em;
+  border-radius: 4px;
+  padding: 0.2em 1em;
+}
+.player .spotify-link:hover {
+  opacity: 1;
+  background: #222;
+}
+
+.player .spotify-logo {
+  width: 40px;
+  height: 40px;
+}
