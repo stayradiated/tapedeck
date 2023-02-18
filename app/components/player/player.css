@@ -180,6 +180,9 @@
   text-align: left;
   color: var(--color-fg);
   line-height: 1.5em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .player .track-list .artist {
